@@ -5,15 +5,15 @@ import javax.swing.*;
 public class NumbersMenu {
     public static void main(String[] args) {
 
-        int i= 0;
-        int j=1;
+        int choice,i= 0;
+        double factorial=0 ;
         int fact= 1;
 
 
 
         do {
             int number = Integer.parseInt(JOptionPane.showInputDialog("Please enter any whole number: "));
-            int choice = Integer.parseInt(JOptionPane.showInputDialog("What would you like to do with your number? \n1. Determine if the number is even or odd," +
+            choice = Integer.parseInt(JOptionPane.showInputDialog("What would you like to do with your number? \n1. Determine if the number is even or odd," +
                     "\n2. Find the factorial of the number    \n3.Quit the program  \n\nPlease enter your choice: "));
             switch (choice) {
                 case 1:
@@ -24,13 +24,15 @@ public class NumbersMenu {
                     i++;
                     break;
                 case 2:
-                    for(j=1;j<=number;j++) {
-                        fact = fact * j;
-                    }
+
                     if(number<0)
                         JOptionPane.showMessageDialog(null, "Can't get the factorial of a negative number! Please try again ", "Factorial error", JOptionPane.ERROR_MESSAGE);
                     else
-                        JOptionPane.showMessageDialog(null, "The factorial of "+number+" is "+fact, "Factorial", JOptionPane.INFORMATION_MESSAGE);
+                    factorial= 1;
+                    for(int j=1;j<=number;j++)
+                        factorial *= j;
+                        JOptionPane.showMessageDialog(null, "The factorial of "+number+" is "+factorial, "Factorial", JOptionPane.INFORMATION_MESSAGE);
+
                     i++;
 
                     break;
@@ -43,7 +45,7 @@ public class NumbersMenu {
 
         }
 
-        while (i <= 10) ;
+        while (i <= 10 && choice!=3) ;
 
     }
 }
