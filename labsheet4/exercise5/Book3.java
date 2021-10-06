@@ -1,13 +1,13 @@
-package labsheet4.exercise4;
+package labsheet4.exercise5;
 
-public class Book2 {
+public class Book3 {
     String title;
     double price;
     String ISBN;
     int pages;
 
 
-    public Book2() {
+    public Book3() {
 
         title = " Not available ";
         price = 0;
@@ -15,7 +15,7 @@ public class Book2 {
         pages = 0;
     }
 
-    public Book2(String title, double price, String ISBN, int pages) {
+    public Book3(String title, double price, String ISBN, int pages) {
 
         this.title = title;
         this.price = price;
@@ -60,7 +60,5 @@ public class Book2 {
     }
 
 
-
-
-
 }
+
