@@ -46,12 +46,30 @@ public class Book3 {
 
 
     public void setTitle(String title){
+
+        if(title==null || title.equals(""))
+            this.title="No valid title entered";
+        else
         this.title=title;
     }
-    public void setPrice(double price) {this.price = price;}
-    public void setISBN(String ISBN){}
+    public void setPrice(double price) {
+        if(price<0 || price >50000)
+            this.price= 0;
+        else
+        this.price = price;}
+    public void setISBN(String ISBN){
+        if(ISBN==null || ISBN.equals(""))
+            this.ISBN="No valid ISBN entered";
+        else
+            this.ISBN=ISBN;
+
+    }
     public void setPages(int pages){
-        this.pages=pages;
+        if(pages<0 || pages>4000)
+          this.pages= 0;
+        else
+
+          this.pages=pages;
     }
 
     public String toString(){
