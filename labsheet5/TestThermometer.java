@@ -11,13 +11,14 @@ public class TestThermometer {
 
         Thermometer c1= new Thermometer();
 
-        output += "Calling the no-argument constructor. The temperature of the first thermometer is "+c1.toString()+
-        "\n\nFirst Thermometer: \n\nCurrent temperature: "+c1.toString()+"  \n\nMaximum Temperature:"+c1.toString()+"\n\nMinimum temperature: "+c1.toString() ;
+        c1.toString();
+
+        output += "*****Thermometer Testing*****\n\nCalling the no-argument constructor. \nThe results of the first thermometer are "+c1.toString() ;
 
         Thermometer c2= new Thermometer(35,35,35);
 
-        output += "Calling the one-argument constructor. The temperature of the second thermometer is "+c2.toString()+
-                "\n\nFirst Thermometer: \n\nCurrent temperature: "+c2.toString()+"  \n\nMaximum Temperature:"+c2.toString()+"\n\nMinimum temperature: "+c2.toString() ;
+        output += "\n\nCalling the one-argument constructor. \nThe results of the second thermometer are "+c2.toString() ;
 
+        JOptionPane.showMessageDialog(null, output, null, JOptionPane.INFORMATION_MESSAGE);
     }
 }

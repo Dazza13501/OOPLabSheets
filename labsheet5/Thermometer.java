@@ -1,22 +1,24 @@
 package labsheet5;
 
+import javax.swing.*;
+
 public class Thermometer {
 
     private int temperature;
     private int maxTemperature;
     private int minTemperature;
 
-    public Thermometer(){
-        temperature=0;
-        maxTemperature=0;
-        minTemperature=0;
+    public Thermometer() {
+        temperature = 0;
+        maxTemperature = 0;
+        minTemperature = 0;
     }
 
-    public Thermometer(int temperature, int maxTemperature, int minTemperature){
+    public Thermometer(int temperature, int maxTemperature, int minTemperature) {
 
-        this.temperature= temperature;
-        this.maxTemperature= maxTemperature;
-        this.minTemperature= minTemperature;
+        this.temperature = temperature;
+        this.maxTemperature = maxTemperature;
+        this.minTemperature = minTemperature;
 
     }
 
@@ -42,5 +44,11 @@ public class Thermometer {
 
     public void setMaxTemperature(int maxTemperature) {
         this.maxTemperature = maxTemperature;
+    }
+
+
+    public String toString() {
+
+        return ("\nThe current temperature is: " + temperature + "\nThe minimum temperature is " + minTemperature + "\nThe maximum temperature is: " + maxTemperature);
     }
 }
