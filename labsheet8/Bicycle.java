@@ -1,6 +1,6 @@
 package labsheet8;
 
-public class Bicycle {
+public class Bicycle extends Vehicle {
 
     private int gearCount;
     private boolean hasBell;
@@ -11,9 +11,11 @@ public class Bicycle {
     }
 
 
-    public Bicycle(int gearCount, boolean hasBell) {
-        this.gearCount = gearCount;
-        this.hasBell = hasBell;
+    public Bicycle(double price, double length, double height, double weight, String manufacturer, String model, boolean hasBell , int gearCount){
+        super(price, length, height, weight, manufacturer, model);
+        setHasBell(hasBell);
+        setGearCount(gearCount);
+
     }
 
     public int getGearCount() {
@@ -24,11 +26,26 @@ public class Bicycle {
         this.gearCount = gearCount;
     }
 
-    public boolean isHasBell() {
+    public boolean getHasBell() {
         return hasBell;
     }
 
     public void setHasBell(boolean hasBell) {
         this.hasBell = hasBell;
     }
+
+public String toString(){
+
+       String st=  super.toString() + " \nDoes it have a bell? ";
+
+       if(getHasBell())
+           st+="Yes";
+       else
+           st+="No";
+
+       st +="\nNumber of gears: " +getGearCount();
+       return st;
+
+}
+
 }
