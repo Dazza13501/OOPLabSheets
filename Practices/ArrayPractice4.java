@@ -18,8 +18,10 @@ public class ArrayPractice4 {
             if (country[i].length() > longest.length())
                 longest = country[i];
         }
+
+        Arrays.sort(country);
         message = "Your list of countries in ascending order: \n\n" + Arrays.toString(country) +
-                " The country with the most letters is:" + longest;
+                "\n\n The country with the most letters is: " + longest;
 
         JOptionPane.showMessageDialog(null, message, "Results", JOptionPane.INFORMATION_MESSAGE);
         System.exit(0);
