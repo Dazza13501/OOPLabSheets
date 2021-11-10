@@ -16,8 +16,8 @@ public class Dice {
         int computerTotal= num3+num4;
 
 
-        JOptionPane.showMessageDialog(null, "Player \nDie 1: "+num1+" Die 2: "+num2+
-                "\nComputer \nDie 1: "+num3+" Die 2: "+num4,"Results", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Player \nDie 1: "+num1+" \nDie 2: "+num2+
+                "\nComputer \nDie 1: "+num3+" \nDie 2: "+num4,"Results", JOptionPane.INFORMATION_MESSAGE);
 
         if(playerTotal>computerTotal) {
             JOptionPane.showMessageDialog(null, "Congratulations. With a score of " + playerTotal + " to " + computerTotal +
