@@ -41,8 +41,8 @@ public class Dice {
 
             }
         }
-            JOptionPane.showMessageDialog(null, "Overall Results: \n\nPlayer Wins " + playerWins + " Computer Wins: " + computerWins +
-                    "Draws: " + Draws, "Overall Score", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Overall Results after 10 matches: \n\nPlayer Wins " + playerWins + " \nComputer Wins: " + computerWins +
+                    " \nDraws: " + Draws, "Overall Score", JOptionPane.INFORMATION_MESSAGE);
 
     }
 }
