@@ -10,10 +10,10 @@ public class MathRandom {
         //math.random() default is 0 to 1.To get 0 to 100, multiply by 101. 0-10, multiply by 11 etc. Multiply by 1 no. above for range. To exclude 0. multiply by 100 then add 1 for range 1-100.
 
        if(num<50)
-           JOptionPane.showMessageDialog(null, num+" is less than 50. A number less than 50 was generated.");
+           JOptionPane.showMessageDialog(null, num+" is less than 50. A number less than 50 was generated.","Less than 50", JOptionPane.INFORMATION_MESSAGE);
 
        else
-           JOptionPane.showMessageDialog(null, num+" is greater than 50. A number greater than 50 was generated.");
+           JOptionPane.showMessageDialog(null, num+" is greater than 50. A number greater than 50 was generated.","Greater than 50", JOptionPane.INFORMATION_MESSAGE);
 
 
     }
