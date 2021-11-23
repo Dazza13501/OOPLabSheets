@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class Staff implements Serializable {
+public  class Staff implements Serializable {
 
     private String forename;
     private String surname;
@@ -31,12 +31,11 @@ public class Staff implements Serializable {
         setDOB(DOB);
         setAddress(address);
         setPhoneNo(phoneNo);
-        incrmentCount();
+        incrementCount();
         setStaffID(count);
     }
 
-    public String getForename() {
-        forename= JOptionPane.showInputDialog("Please enter your forename");
+    public String getForename(){
         return forename;
     }
 
@@ -96,21 +95,33 @@ public class Staff implements Serializable {
     }
 
     public int getStaffID() {
+
         return staffID;
     }
 
     public void setStaffID(int staffID) {
+
         this.staffID = staffID;
     }
 
-    private static void incrmentCount(){
+    private static void incrementCount(){
 
         count++;
     }
 
-    public String toString(){
+    public  String toString(){
 
-        return "Staff Details. \n\nName: Forename: "+getForename()+ " \nSurname: "+getSurname()+ " \nGender: "+getGender()+ " \nDOB: "+getDOB()+ " \nAddress: "+getAddress()+ " \nPhoneNumber: "+getPhoneNo();
+        String str= "\n\nStaff Details. \n\nName: Forename: "+getForename()+ " \nSurname: "+getSurname()+ " \nGender: "+getGender()+" \nAddress: "+getAddress()+ " \nPhoneNumber: "+getPhoneNo()+ "" +
+                "\nDOB: ";
+
+                if(DOB==null)
+                    str+=JOptionPane.showInputDialog("Can't have a null DOB!! Please enter your DOB");
+                else
+                    str+= getDOB().get(Calendar.DATE) + "-"+ getDOB().get(Calendar.MONTH) + "-"+ getDOB().get(Calendar.YEAR);
+
+
+
+               return str;
 
     }
 

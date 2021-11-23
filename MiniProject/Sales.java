@@ -6,23 +6,25 @@ import java.util.Date;
 
 public class Sales {
 
+
+    private static double sales=0;
     private String salesDate;
-    private double sales = 0;
-    private double totalSales = 0;
+
+
 
 
     public Sales() {
-        this(null, 0,0);
+        this(null, 0);
     }
 
 
-    public Sales(String salesDate, double sales, double totalSales) {
+    public Sales(String salesDate, double sales) {
         setSalesDate(salesDate);
         setSales(sales);
-        setTotalSales(totalSales);
+
     }
 
-    public String getSalesDate() {
+    public static String getSalesDate() {
         Date salesDate = new Date();
         SimpleDateFormat format =new SimpleDateFormat("dd/MM/yy");
         String date = format.format(salesDate);
@@ -30,6 +32,7 @@ public class Sales {
     }
 
     public void setSalesDate(String salesDate) {
+
         this.salesDate = salesDate;
     }
 
@@ -42,18 +45,11 @@ public class Sales {
         this.sales = sales;
     }
 
-    public double getTotalSales() {
-        totalSales += sales;
-        return totalSales;
-    }
 
-    public void setTotalSales(double totalSales) {
-        this.totalSales = totalSales;
-    }
 
     public String toString(){
 
-        return "Sales: "+getSales();
+        return "\n\nSales Details. \n\nSales: "+getSales()+ "\nToday's date: "+getSalesDate();
 
     }
 }

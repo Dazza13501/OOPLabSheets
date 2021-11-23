@@ -25,39 +25,47 @@ public class Game implements Serializable {
     }
 
     public String getCategory() {
+
         return category;
     }
 
     public void setCategory(String category) {
+
         this.category = category;
     }
 
     public String getTitle() {
+
         return title;
     }
 
     public void setTitle(String title) {
+
         this.title = title;
     }
 
     public int getAge() {
+
         return age;
     }
 
     public void setAge(int age) {
+
         this.age = age;
     }
 
     public double getPrice() {
+
         return price;
     }
 
     public void setPrice(double price) {
+
         this.price = price;
     }
     public String toString(){
 
-        return "Video Game details. \n\nCategory: + "+getCategory()+" \nTitle: "+getTitle()+" \nAge: "+getAge()+" \nPrice: "+getPrice();
+        return "\n\nVideo Game details. \n\nCategory: " +getCategory()+" \nTitle: "+getTitle()+" \nAge: "+getAge()+" \nPrice: "+getPrice();
     }
 
 }
