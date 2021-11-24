@@ -1,14 +1,14 @@
 package MiniProject;
 
-import Practices.GUIPractice;
+
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.GregorianCalendar;
+
+
 
 public class GameStore extends JFrame implements ActionListener {
 
@@ -16,7 +16,7 @@ public class GameStore extends JFrame implements ActionListener {
     private JMenu gameMenu;
     private JMenu salesMenu;
     private JLabel welLabel;
-    private JLabel
+    private JLabel imgLabel;
 
 
     public GameStore() {
@@ -24,22 +24,37 @@ public class GameStore extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
         setIconImage(new ImageIcon(getClass().getResource("controller.png")).getImage());
-        BorderLayout layout = new BorderLayout(6,8);
+        BorderLayout layout= new BorderLayout(2,2);
         setLayout(layout);
 
-       createGameMenu();
-       createStaffMenu();
-       createSalesMenu();
+        createGameMenu();
+        createStaffMenu();
+        createSalesMenu();
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
-        menuBar.add(gameMenu);
+        menuBar.setBackground(Color.RED);
         menuBar.add(staffMenu);
+        menuBar.add(gameMenu);
         menuBar.add(salesMenu);
+
+
 
         welLabel = new JLabel("Welcome");
         add(welLabel);
+        /*try {
+            imgLabel = new JLabel();
+            imgLabel.setIcon(new ImageIcon(getClass().getResource("controller.png")));
 
+            imgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            add(imgLabel);
+        }
+        catch(Exception ex) {
+
+            JOptionPane.showMessageDialog(null,"Invalid Image File in Main Screen");
+        }*/
+
+        setSize(450,350);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -47,30 +62,96 @@ public class GameStore extends JFrame implements ActionListener {
     }
 
 
-
     public static void main(String[] args) {
 
-        GameStore  store= new GameStore();
+        GameStore store = new GameStore();
     }
 
-    public static void actionPerformed (ActionEvent event){
+    public void actionPerformed(ActionEvent event) {
 
         String menuName;
-        menuName=  event.getActionCommand();
+        menuName = event.getActionCommand();
 
-        if(menuName.equals("Exit"))
+        if (menuName.equals("Exit"))
             System.exit(0);
         else
-            welLabel.setText("Menu item "+menuName " is selected");
-
-}
+            welLabel.setText("Menu item " + menuName + " is selected");
 
     }
 
 
-}
 
-    /*
+    private void createStaffMenu() {
+        JMenuItem item;
+
+        staffMenu = new JMenu("Staff");
+
+        item= new JMenuItem("Add staff");
+        item.addActionListener(this);
+        staffMenu.add(item);
+
+        item= new JMenuItem("View staff");
+        item.addActionListener(this);
+        staffMenu.add(item);
+
+        item= new JMenuItem("Update staff");
+        item.addActionListener(this);
+        staffMenu.add(item);
+
+        item= new JMenuItem("Delete staff");
+        item.addActionListener(this);
+        staffMenu.add(item);
+
+    }
+
+    private void createGameMenu() {
+
+        JMenuItem item;
+
+        gameMenu = new JMenu("Game");
+
+        item= new JMenuItem("Add game");
+        item.addActionListener(this);
+        gameMenu.add(item);
+
+        item= new JMenuItem("View game");
+        item.addActionListener(this);
+        gameMenu.add(item);
+
+        item= new JMenuItem("Update game");
+        item.addActionListener(this);
+        gameMenu.add(item);
+
+        item= new JMenuItem("Delete game");
+        item.addActionListener(this);
+        gameMenu.add(item);
+
+    }
+
+    private void createSalesMenu() {
+        JMenuItem item;
+
+        salesMenu = new JMenu("Sales");
+
+        item= new JMenuItem("Add sales");
+        item.addActionListener(this);
+        salesMenu.add(item);
+
+        item= new JMenuItem("View sales");
+        item.addActionListener(this);
+        salesMenu.add(item);
+
+        item= new JMenuItem("Update sales");
+        item.addActionListener(this);
+        salesMenu.add(item);
+
+        item= new JMenuItem("Delete sales");
+        item.addActionListener(this);
+        salesMenu.add(item);
+
+    }
+
+}   /*
     String output="";
 
         Game g1 = new Game();
@@ -128,4 +209,4 @@ public class GameStore extends JFrame implements ActionListener {
 
 
 
-
+*/
