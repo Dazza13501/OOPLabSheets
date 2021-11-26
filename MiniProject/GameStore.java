@@ -4,10 +4,13 @@ package MiniProject;
 
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class GameStore extends JFrame implements ActionListener {
@@ -17,15 +20,32 @@ public class GameStore extends JFrame implements ActionListener {
     private JMenu salesMenu;
     private JLabel welLabel;
     private JLabel imgLabel;
+    private JPanel mainPanel;
+    private JPanel buttonPanel;
+    private JButton gameButton;
+    private JButton staffButton;
+    private JButton salesButton;
+    private final JLabel time = new JLabel();
+    private final SimpleDateFormat dateform= new SimpleDateFormat("hh:mm");
+    private int currentSecond;
+    private Calendar calendar;
+
+
+    TitledBorder border;
+
 
 
     public GameStore() {
         setTitle("DL's Video Game Store");
+        setSize(600,300);
         setLocationRelativeTo(null);
         setResizable(false);
         setIconImage(new ImageIcon(getClass().getResource("controller.png")).getImage());
-        BorderLayout layout= new BorderLayout(2,2);
+        BorderLayout layout= new BorderLayout();
         setLayout(layout);
+
+
+
 
         createGameMenu();
         createStaffMenu();
@@ -40,9 +60,24 @@ public class GameStore extends JFrame implements ActionListener {
 
 
 
+
+
+        mainPanel = new JPanel();
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
         welLabel = new JLabel("Welcome");
-        add(welLabel);
-        /*try {
+        welLabel.setFont(new Font("sanserif",1,30));
+        welLabel.setForeground(Color.GREEN);
+
+        mainPanel.setLayout(new FlowLayout((FlowLayout.CENTER)));
+        mainPanel.add(welLabel);
+        welLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mainPanel.add(Box.createVerticalStrut(65));
+
+
+
+       /* try {
             imgLabel = new JLabel();
             imgLabel.setIcon(new ImageIcon(getClass().getResource("controller.png")));
 
@@ -52,18 +87,56 @@ public class GameStore extends JFrame implements ActionListener {
         catch(Exception ex) {
 
             JOptionPane.showMessageDialog(null,"Invalid Image File in Main Screen");
-        }*/
+        }
+*/
+        //https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
+        buttonPanel = new JPanel();
 
-        setSize(450,350);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        border = new TitledBorder("Shortcut Button");
+        border.setTitleColor(Color.RED);
+
+        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+
+        buttonPanel.setPreferredSize(new Dimension(350, 50));
+        buttonPanel.setBorder(border);
+        buttonPanel.setLayout(new GridLayout(1,3));
+
+        staffButton = new JButton("Register Staff");
+        staffButton.addActionListener(this);
+        staffButton.setBackground(Color.red);
+
+
+        gameButton = new JButton("Add Game");
+        gameButton.addActionListener(this);
+        gameButton.setBackground(Color.green);
+
+
+        salesButton = new JButton("Add Sales");
+        salesButton.addActionListener(this);
+        salesButton.setBackground(Color.white);
+
+        buttonPanel.setLayout(new FlowLayout((FlowLayout.CENTER)));
+        buttonPanel.add(staffButton);
+        buttonPanel.add(gameButton);
+        buttonPanel.add(salesButton);
+
+        add(mainPanel, BorderLayout.NORTH);
+        add(buttonPanel,BorderLayout.SOUTH);
+
+
+
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+
+
 
 
     }
 
 
     public static void main(String[] args) {
-
+        new GameStore();
         GameStore store = new GameStore();
     }
 
