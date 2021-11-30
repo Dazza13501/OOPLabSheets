@@ -4,34 +4,33 @@ import java.io.Serializable;
 
 public class Game implements Serializable {
 
-    private String category;
+    private String genre;
     private String title;
     private int age;
     private double price;
 
 
     public Game() {
-        category = "Undefined";
+        genre = "Undefined";
         title = "Undefined";
         age = 0;
         price = 0;
     }
 
-    public Game(String category, String title, int age, double price) {
-        setCategory(category);
+    public Game(String title, int age, double price) {
         setTitle(title);
         setAge(age);
         setPrice(price);
     }
 
-    public String getCategory() {
+    public String getGenre() {
 
-        return category;
+        return genre;
     }
 
-    public void setCategory(String category) {
+    public void setGenre(String genre) {
 
-        this.category = category;
+        this.genre = genre;
     }
 
     public String getTitle() {
@@ -65,7 +64,7 @@ public class Game implements Serializable {
     }
     public String toString(){
 
-        return "\n\nVideo Game details. \n\nCategory: " +getCategory()+" \nTitle: "+getTitle()+" \nAge: "+getAge()+" \nPrice: "+getPrice();
+        return "\n\nVideo Game details. \n\nGenre: " +getGenre()+" \nTitle: "+getTitle()+" \nAge: "+getAge()+" \nPrice: "+getPrice();
     }
 
 }

@@ -1,6 +1,6 @@
 package MiniProject;
 
-
+/*
 
 
 import javax.swing.*;
@@ -8,9 +8,13 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.*;
 
 
 public class GameStore extends JFrame implements ActionListener {
@@ -25,13 +29,15 @@ public class GameStore extends JFrame implements ActionListener {
     private JButton gameButton;
     private JButton staffButton;
     private JButton salesButton;
-    private final JLabel time = new JLabel();
-    private final SimpleDateFormat dateform= new SimpleDateFormat("hh:mm");
-    private int currentSecond;
-    private Calendar calendar;
+
 
 
     TitledBorder border;
+    ArrayList<Game> games= new ArrayList<>();
+    private Game game;
+
+    ArrayList<Staff> Staff= new ArrayList<>();
+    private Staff staff;
 
 
 
@@ -44,9 +50,7 @@ public class GameStore extends JFrame implements ActionListener {
         BorderLayout layout= new BorderLayout();
         setLayout(layout);
 
-
-
-
+        createFileMenu();
         createGameMenu();
         createStaffMenu();
         createSalesMenu();
@@ -59,9 +63,6 @@ public class GameStore extends JFrame implements ActionListener {
         menuBar.add(salesMenu);
 
 
-
-
-
         mainPanel = new JPanel();
         mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -70,14 +71,13 @@ public class GameStore extends JFrame implements ActionListener {
         welLabel.setFont(new Font("sanserif",1,30));
         welLabel.setForeground(Color.GREEN);
 
-        mainPanel.setLayout(new FlowLayout((FlowLayout.CENTER)));
+        mainPanel.setLayout(new FlowLayout((FlowLayout.CENTER)));//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
         mainPanel.add(welLabel);
-        welLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        welLabel.setAlignmentX(Component.CENTER_ALIGNMENT);//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
         mainPanel.add(Box.createVerticalStrut(65));
 
 
-
-       /* try {
+      /* try {
             imgLabel = new JLabel();
             imgLabel.setIcon(new ImageIcon(getClass().getResource("controller.png")));
 
@@ -88,8 +88,7 @@ public class GameStore extends JFrame implements ActionListener {
 
             JOptionPane.showMessageDialog(null,"Invalid Image File in Main Screen");
         }
-*/
-        //https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
+
         buttonPanel = new JPanel();
 
         border = new TitledBorder("Shortcut Button");
@@ -115,16 +114,15 @@ public class GameStore extends JFrame implements ActionListener {
         salesButton.addActionListener(this);
         salesButton.setBackground(Color.white);
 
-        buttonPanel.setLayout(new FlowLayout((FlowLayout.CENTER)));
+        buttonPanel.setLayout(new FlowLayout((FlowLayout.CENTER)));//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
+
         buttonPanel.add(staffButton);
         buttonPanel.add(gameButton);
         buttonPanel.add(salesButton);
 
-        add(mainPanel, BorderLayout.NORTH);
-        add(buttonPanel,BorderLayout.SOUTH);
 
-
-
+        add(mainPanel, BorderLayout.NORTH);//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
+        add(buttonPanel,BorderLayout.SOUTH);//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -137,20 +135,9 @@ public class GameStore extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         new GameStore();
-        GameStore store = new GameStore();
     }
 
-    public void actionPerformed(ActionEvent event) {
 
-        String menuName;
-        menuName = event.getActionCommand();
-
-        if (menuName.equals("Exit"))
-            System.exit(0);
-        else
-            welLabel.setText("Menu item " + menuName + " is selected");
-
-    }
 
 
 
@@ -223,6 +210,254 @@ public class GameStore extends JFrame implements ActionListener {
         salesMenu.add(item);
 
     }
+    public void createFileMenu() {
+
+        addWindowListener(new WindowAdapter()  {
+
+            public void windowClosing(WindowEvent e) {
+                int option = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Confirmation",JOptionPane.YES_NO_OPTION);
+
+                if(option == JOptionPane.YES_OPTION) {
+                    try {
+                        save();
+                        JOptionPane.showMessageDialog(null,"Data saved successfully","Saved",JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(null,"Not able to save the file");
+                        e1.printStackTrace();
+                    }
+
+                    System.exit(0);
+                }
+            }
+        });
+
+    }
+    public void save() throws IOException {
+
+        ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("cuisines.dat"));
+        os.writeObject(games);
+        os.close();
+
+
+    }
+
+
+    public void open() {
+        try {
+
+            File file = new File("games.dat");
+
+            if(file.exists()) {
+
+                ObjectInputStream game = new ObjectInputStream(new FileInputStream(file));
+                games = (ArrayList<Game>) game.readObject();
+                game.close();
+
+
+                ObjectInputStream staffs = new ObjectInputStream(new FileInputStream(file));
+                staff = (ArrayList<Staff>) staffs.readObject();
+                staffs.close();
+
+
+                JOptionPane.showMessageDialog(null, file.getName() + " file loaded into the system", "Open", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                file.createNewFile();
+                JOptionPane.showMessageDialog(null, "File just created!!", "Created " + file.getName() + " file", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        catch(ClassNotFoundException classNotFoundException) {
+            JOptionPane.showMessageDialog(null,"Class of object deserialised not a match for anything used in this application","Error",JOptionPane.ERROR_MESSAGE);
+            classNotFoundException.printStackTrace();
+        } catch (FileNotFoundException fileNotFoundException) {
+            JOptionPane.showMessageDialog(null,"File not found","Error",JOptionPane.ERROR_MESSAGE);
+            fileNotFoundException.printStackTrace();
+        }
+        catch (IOException ioException) {
+            JOptionPane.showMessageDialog(null,"Problem reading from the file","Error",JOptionPane.ERROR_MESSAGE);
+            ioException.printStackTrace();
+        }
+    }
+
+
+    public void addStaff() {
+        final String [] genderList = {"Male","Female"};
+        String forename;
+        String surname;
+        Date DOB = null;
+        String gender;
+        String address;
+        int PhoneNo;
+
+
+        forename = (JOptionPane.showInputDialog("Enter staffs forename"));
+        surname = JOptionPane.showInputDialog("Enter staffs name");
+        gender = (String) JOptionPane.showInputDialog(null,"Genre","Genre",JOptionPane.QUESTION_MESSAGE,null,genderList,genderList[0]);
+        try {
+            DOB = DateFormat.getDateInstance().parse(JOptionPane.showInputDialog("Please enter your DOB in the format dd/mm/yyyy"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        address = JOptionPane.showInputDialog("Enter games name");
+        PhoneNo = Integer.parseInt(JOptionPane.showInputDialog("Enter games name"));
+
+        staff= new Staff(forename,surname,DOB,address,PhoneNo);
+        Staff.add(staff);
+
+        JOptionPane.showMessageDialog(null,"Staff '" + forename + surname+ "' added to the system");
+    }
+
+
+
+
+    public void displayStaff() {
+        JComboBox staffCombo = new JComboBox();
+        JTextArea output = new JTextArea();
+
+        output.setText("Staff Details:\n\n");
+
+        if(staff.size() < 1) {
+            JOptionPane.showMessageDialog(null,"No staff are added to the system yet. Feel free to 'Add' new staff.","Warning",JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            Iterator<Staff> iterator = staff.iterator();
+
+            while(iterator.hasNext()) {
+                staffCombo.addItem(iterator.next().getTitle() + "\n");
+            }
+
+            JOptionPane.showMessageDialog(null,cuisineCombo,"Select game to view details",JOptionPane.PLAIN_MESSAGE);
+
+            int selected = cuisineCombo.getSelectedIndex();
+            output.append(games.get(selected).toString());
+
+            JOptionPane.showMessageDialog(null,output,"Game Details",JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+
+    public void deleteStaff() {
+        JComboBox cuisineList = new JComboBox();
+
+        for(Game c : games) {
+            cuisineList.addItem(c.getTitle());
+        }
+
+        JOptionPane.showMessageDialog(null,"Select game to be removed","Remove Game",JOptionPane.INFORMATION_MESSAGE);
+
+        JOptionPane.showMessageDialog(null,cuisineList,"Remove Game",JOptionPane.INFORMATION_MESSAGE);
+
+        int selected = cuisineList.getSelectedIndex();
+
+        games.remove(selected);
+
+        JOptionPane.showMessageDialog(null,"Game Removed","Removed",JOptionPane.INFORMATION_MESSAGE);
+    }
+
+
+
+
+    public void addGame() {
+
+        final String [] categoryList = {"Horror","Action-adventure","RPG", "Sports"};
+        String category;
+        String title;
+        int age;
+        double price;
+
+        category = (String) JOptionPane.showInputDialog(null,"Genre","Genre",JOptionPane.QUESTION_MESSAGE,null,categoryList,categoryList[0]);
+        title = JOptionPane.showInputDialog("Enter games name");
+        age = Integer.parseInt(JOptionPane.showInputDialog("Enter games age group"));
+        price = Double.parseDouble(JOptionPane.showInputDialog("Enter games price"));
+
+        game = new Game(title,age,price);
+        games.add(game);
+
+        JOptionPane.showMessageDialog(null,"Video game '" + title + "' added to the system");
+    }
+
+
+    public void displayGame() {
+        JComboBox gameCombo = new JComboBox();
+        JTextArea output = new JTextArea();
+
+        output.setText("Game Details:\n\n");
+
+        if(games.size() < 1) {
+            JOptionPane.showMessageDialog(null,"No games are added to the system yet. Feel free to 'Add' new games.","Warning",JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            Iterator<Game> iterator = games.iterator();
+
+            while(iterator.hasNext()) {
+                gameCombo.addItem(iterator.next().getTitle() + "\n");
+            }
+
+            JOptionPane.showMessageDialog(null,gameCombo,"Select game to view details",JOptionPane.PLAIN_MESSAGE);
+
+            int selected = gameCombo.getSelectedIndex();
+            output.append(games.get(selected).toString());
+
+            JOptionPane.showMessageDialog(null,output,"Game Details",JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+
+    public void deleteGame() {
+
+        JComboBox gameList = new JComboBox();
+
+        for(Game c : games) {
+            gameList.addItem(c.getTitle());
+        }
+
+        JOptionPane.showMessageDialog(null,"Select game to be removed","Remove Game",JOptionPane.INFORMATION_MESSAGE);
+
+        JOptionPane.showMessageDialog(null,gameList,"Remove Game",JOptionPane.INFORMATION_MESSAGE);
+
+        int selected = gameList.getSelectedIndex();
+
+        games.remove(selected);
+
+        JOptionPane.showMessageDialog(null,"Game Removed","Removed",JOptionPane.INFORMATION_MESSAGE);
+    }
+
+
+    public void addSales() {
+    }
+
+    public void viewSales() {
+    }
+
+    public void actionPerformed(ActionEvent event) {
+
+        String menuName;
+        menuName = event.getActionCommand();
+        if(menuName == "Add Staff" || event.getSource() == staffButton) {
+            addStaff();
+        } else if(menuName == "View Staff") {
+            displayStaff();
+        } else if(menuName == "Delete Staff") {
+            deleteStaff();
+        }
+
+        else if (menuName == "Add Game" || event.getSource() == gameButton) {
+            addGame();
+        } else if(menuName == "View Game") {
+            displayGame();
+        } else if(menuName == "Delete game") {
+            deleteGame();
+        }
+
+        if (menuName.equals("Exit"))
+            System.exit(0);
+        else
+            welLabel.setText("Menu item " + menuName + " is selected");
+
+    }
+
+
+
 
 }   /*
     String output="";
