@@ -263,7 +263,7 @@ public class GameStore extends JFrame implements ActionListener {
         os.close();
 
         ObjectOutputStream outstr = new ObjectOutputStream(new FileOutputStream("staff.dat"));
-        outstr.writeObject(staff);
+        outstr.writeObject(staffs);
         outstr.close();
 
 
@@ -290,7 +290,7 @@ public class GameStore extends JFrame implements ActionListener {
                 staff.close();
 
 
-                JOptionPane.showMessageDialog(null, file.getName() + " file loaded into the system", "Open", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, file.getName() +" and "+ file2.getName()+" file loaded into the system", "Open", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 file.createNewFile();
                 JOptionPane.showMessageDialog(null, "File just created!!", "Created " + file.getName() + " file", JOptionPane.INFORMATION_MESSAGE);
