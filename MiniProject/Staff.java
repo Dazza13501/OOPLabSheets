@@ -7,28 +7,37 @@ import java.util.Date;
 
 public  class Staff implements Serializable {
 
+    private int ID;
     private String forename;
     private String surname;
     private String gender;
-    private Date DOB;
+    private String DOB;
     private String address;
     private int PhoneNo;
-    private int staffID=0;
-    private static int count;
+
 
 
     public Staff() {
-       this("Undefined","Undefined",null,"Undefined", 0);
+       this(0,"Undefined","Undefined","Undefined",null,"Undefined", 0);
     }
 
-    public Staff(String forename, String surname, Date birthDate, String address, int phoneNo) {
+    public Staff(int ID,String forename, String surname,String gender, String DOB, String address, int phoneNo) {
+        setID(ID);
         setForename(forename);
         setSurname(surname);
+        setGender(gender);
         setDOB(DOB);
         setAddress(address);
         setPhoneNo(phoneNo);
-        incrementCount();
-        setStaffID(count);
+
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getForename(){
@@ -61,12 +70,12 @@ public  class Staff implements Serializable {
         this.gender = gender;
     }
 
-    public Date getDOB() {
+    public String getDOB() {
 
         return DOB;
     }
 
-    public void setDOB(Date DOB) {
+    public void setDOB(String DOB) {
 
         this.DOB = DOB;
     }
@@ -91,20 +100,7 @@ public  class Staff implements Serializable {
         PhoneNo = phoneNo;
     }
 
-    public int getStaffID() {
 
-        return staffID;
-    }
-
-    public void setStaffID(int staffID) {
-
-        this.staffID = staffID;
-    }
-
-    private static void incrementCount(){
-
-        count++;
-    }
 
     public  String toString(){
 

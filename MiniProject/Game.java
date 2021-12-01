@@ -17,7 +17,8 @@ public class Game implements Serializable {
         price = 0;
     }
 
-    public Game(String title, int age, double price) {
+    public Game(String genre,String title, int age, double price) {
+        setGenre(genre);
         setTitle(title);
         setAge(age);
         setPrice(price);
