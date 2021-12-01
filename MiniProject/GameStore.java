@@ -1,8 +1,5 @@
 package MiniProject;
 
-
-
-
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -70,7 +67,6 @@ public class GameStore extends JFrame implements ActionListener {
         welLabel.setForeground(Color.GREEN);
 
         mainPanel.setLayout(new FlowLayout((FlowLayout.CENTER)));//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
-        mainPanel.add(welLabel);
         welLabel.setAlignmentX(Component.CENTER_ALIGNMENT);//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
         mainPanel.add(Box.createVerticalStrut(65));
 
@@ -79,7 +75,6 @@ public class GameStore extends JFrame implements ActionListener {
         dateLabel.setFont(new Font("sanserif", 1, 10));
         dateLabel.setForeground(Color.BLUE);
         dateLabel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        //mainPanel.add(dateLabel);
 
        /*try {
             imgLabel = new JLabel();
@@ -145,7 +140,9 @@ public class GameStore extends JFrame implements ActionListener {
 
 
         add(mainPanel, BorderLayout.NORTH);//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
-        add(dateLabel,BorderLayout.WEST);
+        add(dateLabel,BorderLayout.NORTH);
+        add(welLabel,BorderLayout.CENTER);
+        welLabel.setAlignmentX(Component.CENTER_ALIGNMENT);//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
         add(buttonPanel, BorderLayout.SOUTH);//https://www.tutorialspoint.com/what-is-a-layoutmanager-and-types-of-layoutmanager-in-java
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -284,7 +281,7 @@ public class GameStore extends JFrame implements ActionListener {
                 game.close();
 
 
-                ObjectInputStream staff = new ObjectInputStream(new FileInputStream(file));
+                ObjectInputStream staff = new ObjectInputStream(new FileInputStream(file2));
                 staffs = (ArrayList<Staff>) staff.readObject();
                 System.out.println(staffs.size());
                 staff.close();
@@ -316,13 +313,13 @@ public class GameStore extends JFrame implements ActionListener {
         String DOB;
         String gender;
         String address;
-        int PhoneNo;
+        long PhoneNo;
 
         ID=Integer.parseInt(JOptionPane.showInputDialog("Enter staffs ID"));
 
         forename = (JOptionPane.showInputDialog("Enter staffs forename"));
         surname = JOptionPane.showInputDialog("Enter staffs name");
-        gender = (String) JOptionPane.showInputDialog(null, "Genre", "Genre", JOptionPane.QUESTION_MESSAGE, null, genderList, genderList[0]);
+        gender = (String) JOptionPane.showInputDialog(null, "Gender", "Gender", JOptionPane.QUESTION_MESSAGE, null, genderList, genderList[0]);
         DOB =(JOptionPane.showInputDialog("Please enter your DOB in the format dd/mm/yyyy"));
         address = JOptionPane.showInputDialog("Enter staffs address");
         PhoneNo = Integer.parseInt(JOptionPane.showInputDialog("Enter staffs PhoneNo"));
@@ -371,10 +368,14 @@ public class GameStore extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(null, staffList, "Remove Staff", JOptionPane.INFORMATION_MESSAGE);
 
         int selected = staffList.getSelectedIndex();
-
+        if (staffs.size() < 1) {
+            JOptionPane.showMessageDialog(null, "No staff to delete!", "No staff", JOptionPane.ERROR_MESSAGE);
+        } else {
         staffs.remove(selected);
 
         JOptionPane.showMessageDialog(null, "Staff Removed", "Removed", JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
 
 
@@ -384,14 +385,30 @@ public class GameStore extends JFrame implements ActionListener {
         String genre;
         String title;
         int age;
-        double price;
+        double price=0;
+        int yearReleased=0;
+        int review=0;
 
         genre = (String) JOptionPane.showInputDialog(null, "Genre", "Genre", JOptionPane.QUESTION_MESSAGE, null, categoryList, categoryList[0]);
         title = JOptionPane.showInputDialog("Enter games name");
         age = Integer.parseInt(JOptionPane.showInputDialog("Enter games age group"));
-        price = Double.parseDouble(JOptionPane.showInputDialog("Enter games price"));
+        if(age != 3 | age != 7 | age != 12 | age != 16 | age != 18 )
+            JOptionPane.showInputDialog(null,"Error! Please enter a valid age (3,7,12,16,18)", "Incorrect age", JOptionPane.ERROR_MESSAGE);
 
-        game = new Game(genre,title, age, price);
+        price = Double.parseDouble(JOptionPane.showInputDialog("Enter games price"));
+        if(price>999.99)
+            JOptionPane.showInputDialog(null,"Error! Please enter a valid price(<999.99 and yes, there is a game worth this)", "Incorrect price", JOptionPane.ERROR_MESSAGE);
+        else
+        yearReleased = Integer.parseInt(JOptionPane.showInputDialog("Enter games release year"));
+        if(yearReleased > 2021 || yearReleased <1962)
+            JOptionPane.showInputDialog(null,"Error! Please enter a valid year in which a video game was released(1962-2019)", "Incorrect year", JOptionPane.ERROR_MESSAGE);
+        else
+        review = Integer.parseInt(JOptionPane.showInputDialog("Enter games review out of 10"));
+        if(review >10)
+            JOptionPane.showInputDialog(null,"Error! Please enter a rating less than or equal to 10", "Incorrect review", JOptionPane.ERROR_MESSAGE);
+        else
+
+        game = new Game(genre,title, age, price,yearReleased,review);
         games.add(game);
 
         JOptionPane.showMessageDialog(null, "Video game '" + title + "' added to the system");
@@ -435,14 +452,19 @@ public class GameStore extends JFrame implements ActionListener {
 
         JOptionPane.showMessageDialog(null, gameList, "Remove Game", JOptionPane.INFORMATION_MESSAGE);
 
-        int selected = gameList.getSelectedIndex();
 
-        games.remove(selected);
+        if (games.size() < 1) {
+            JOptionPane.showMessageDialog(null, "No games to delete!", "No games", JOptionPane.ERROR_MESSAGE);
+        } else {
 
-        JOptionPane.showMessageDialog(null, "Game Removed", "Removed", JOptionPane.INFORMATION_MESSAGE);
+            int selected = gameList.getSelectedIndex();
+
+            games.remove(selected);
+
+            JOptionPane.showMessageDialog(null, "Game Removed", "Removed", JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
-
-
 
 
     public void actionPerformed(ActionEvent event) {

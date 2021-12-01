@@ -2,7 +2,6 @@ package MiniProject;
 
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 public  class Staff implements Serializable {
@@ -13,7 +12,7 @@ public  class Staff implements Serializable {
     private String gender;
     private String DOB;
     private String address;
-    private int PhoneNo;
+    private long PhoneNo;
 
 
 
@@ -21,7 +20,7 @@ public  class Staff implements Serializable {
        this(0,"Undefined","Undefined","Undefined",null,"Undefined", 0);
     }
 
-    public Staff(int ID,String forename, String surname,String gender, String DOB, String address, int phoneNo) {
+    public Staff(int ID,String forename, String surname,String gender, String DOB, String address, long phoneNo) {
         setID(ID);
         setForename(forename);
         setSurname(surname);
@@ -90,12 +89,12 @@ public  class Staff implements Serializable {
         this.address = address;
     }
 
-    public int getPhoneNo() {
+    public long getPhoneNo() {
 
         return PhoneNo;
     }
 
-    public void setPhoneNo(int phoneNo) {
+    public void setPhoneNo(long phoneNo) {
 
         PhoneNo = phoneNo;
     }
@@ -105,7 +104,7 @@ public  class Staff implements Serializable {
     public  String toString(){
 
          return  "\n\nStaff Details. \n\nName: Forename: "+getForename()+ " \nSurname: "+getSurname()+ " \nGender: "+getGender()+" \nAddress: "+getAddress()+ " \nPhoneNumber: "+getPhoneNo()+ "" +
-                "\nDOB: ";
+                "\nDOB: "+getDOB()+ " \nAddress: "+getAddress()+ " \nPhone Number: "+getPhoneNo();
 
 
 
