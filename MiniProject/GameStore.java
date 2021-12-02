@@ -235,7 +235,7 @@ public class GameStore extends JFrame implements ActionListener {
         addWindowListener(new WindowAdapter() {
 
             public void windowClosing(WindowEvent e) {
-                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                int option = JOptionPane.showConfirmDialog(null, "Would you like to save before exiting the file?", "Confirmation", JOptionPane.YES_NO_OPTION);
 
                 if (option == JOptionPane.YES_OPTION) {
                     try {
@@ -307,28 +307,38 @@ public class GameStore extends JFrame implements ActionListener {
 
     public void addStaff() {
         final String[] genderList = {"Male", "Female"};
-        int ID;
+        int ID=0;
         String forename;
         String surname;
-        String DOB;
         String gender;
         String address;
         long PhoneNo;
-
-        ID=Integer.parseInt(JOptionPane.showInputDialog("Enter staffs ID"));
+        String DOB;
+        //ID=Integer.parseInt(JOptionPane.showInputDialog("Enter staffs ID"));
 
         forename = (JOptionPane.showInputDialog("Enter staffs forename"));
         surname = JOptionPane.showInputDialog("Enter staffs name");
         gender = (String) JOptionPane.showInputDialog(null, "Gender", "Gender", JOptionPane.QUESTION_MESSAGE, null, genderList, genderList[0]);
-        DOB =(JOptionPane.showInputDialog("Please enter your DOB in the format dd/mm/yyyy"));
         address = JOptionPane.showInputDialog("Enter staffs address");
         PhoneNo = Integer.parseInt(JOptionPane.showInputDialog("Enter staffs PhoneNo"));
+        DOB =(JOptionPane.showInputDialog("Please enter your DOB in the format dd/mm/yyyy"));
+        int count= DOB.length();
+        if(count==10) {
+            if(DOB.charAt(0) <=3 || DOB.charAt(3) <=1 || DOB.charAt(4) <=2 || DOB.charAt(6) <=2) {
+                staff = new Staff(ID, forename, surname, gender, DOB, address, PhoneNo);
+                staffs.add(staff);
+             }else{
+                JOptionPane.showInputDialog(null, "Error! There are no more than 31 days, 12 months or 2021 years", "Incorrect date", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showInputDialog(null, "Error! There must be 10 characters in the DOB (dd/mm/yyyy)", "Incorrect date", JOptionPane.ERROR_MESSAGE);
 
-        staff = new Staff(ID,forename, surname,gender,DOB, address, PhoneNo);
-        staffs.add(staff);
-
+        }
         JOptionPane.showMessageDialog(null, "Staff '" + forename + surname + "' added to the system");
+        ID++;
+
     }
+
 
 
     public void displayStaff() {
@@ -384,31 +394,19 @@ public class GameStore extends JFrame implements ActionListener {
         final String[] categoryList = {"Horror", "Action-adventure", "RPG", "Sports"};
         String genre;
         String title;
-        int age;
         double price=0;
         int yearReleased=0;
         int review=0;
 
         genre = (String) JOptionPane.showInputDialog(null, "Genre", "Genre", JOptionPane.QUESTION_MESSAGE, null, categoryList, categoryList[0]);
         title = JOptionPane.showInputDialog("Enter games name");
-        age = Integer.parseInt(JOptionPane.showInputDialog("Enter games age group"));
-        if(age != 3 | age != 7 | age != 12 | age != 16 | age != 18 )
-            JOptionPane.showInputDialog(null,"Error! Please enter a valid age (3,7,12,16,18)", "Incorrect age", JOptionPane.ERROR_MESSAGE);
-
         price = Double.parseDouble(JOptionPane.showInputDialog("Enter games price"));
-        if(price>999.99)
-            JOptionPane.showInputDialog(null,"Error! Please enter a valid price(<999.99 and yes, there is a game worth this)", "Incorrect price", JOptionPane.ERROR_MESSAGE);
-        else
         yearReleased = Integer.parseInt(JOptionPane.showInputDialog("Enter games release year"));
-        if(yearReleased > 2021 || yearReleased <1962)
-            JOptionPane.showInputDialog(null,"Error! Please enter a valid year in which a video game was released(1962-2019)", "Incorrect year", JOptionPane.ERROR_MESSAGE);
-        else
+            //JOptionPane.showInputDialog(null,"Error! Please enter a valid year in which a video game was released(1962-2019)", "Incorrect year", JOptionPane.ERROR_MESSAGE);
         review = Integer.parseInt(JOptionPane.showInputDialog("Enter games review out of 10"));
-        if(review >10)
-            JOptionPane.showInputDialog(null,"Error! Please enter a rating less than or equal to 10", "Incorrect review", JOptionPane.ERROR_MESSAGE);
-        else
+        //JOptionPane.showInputDialog(null,"Error! Please enter a rating less than or equal to 10", "Incorrect review", JOptionPane.ERROR_MESSAGE);
 
-        game = new Game(genre,title, age, price,yearReleased,review);
+        game = new Game(genre,title, price,yearReleased,review);
         games.add(game);
 
         JOptionPane.showMessageDialog(null, "Video game '" + title + "' added to the system");
