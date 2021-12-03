@@ -18,10 +18,8 @@ public class GameStore extends JFrame implements ActionListener {
     private JMenu gameMenu;
     private JMenu salesMenu;
     private JLabel welLabel;
-    private JLabel imgLabel;
     private JLabel dateLabel;
     private JPanel mainPanel;
-    private JPanel imgPanel;
     private JPanel buttonPanel;
     private JButton gameButton;
     private JButton staffButton;
@@ -48,14 +46,12 @@ public class GameStore extends JFrame implements ActionListener {
         createFileMenu();
         createGameMenu();
         createStaffMenu();
-        createSalesMenu();
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         menuBar.setBackground(Color.RED);
         menuBar.add(staffMenu);
         menuBar.add(gameMenu);
-       // menuBar.add(salesMenu);
 
 
         mainPanel = new JPanel();
@@ -75,34 +71,6 @@ public class GameStore extends JFrame implements ActionListener {
         dateLabel.setFont(new Font("sanserif", 1, 10));
         dateLabel.setForeground(Color.BLUE);
         dateLabel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-
-       /*try {
-            imgLabel = new JLabel();
-            imgLabel.setIcon(new ImageIcon(getClass().getResource("controller.png")));
-
-            imgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            add(imgLabel);
-        }
-        catch(Exception ex) {
-
-            JOptionPane.showMessageDialog(null,"Invalid Image File in Main Screen");
-        }
-*/
-/*
-        imgPanel= new JPanel();
-
-        try {
-            imgLabel = new JLabel();
-            imgLabel.setIcon(new ImageIcon(getClass().getResource("controller.png")));
-
-            imgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            add(imgLabel);
-        }
-        catch(Exception ex) {
-
-            JOptionPane.showMessageDialog(null,"Invalid Image File in Main Screen");
-        }
-        */
 
         mainPanel.setLayout(new FlowLayout((FlowLayout.CENTER)));
 
@@ -135,7 +103,6 @@ public class GameStore extends JFrame implements ActionListener {
 
         buttonPanel.add(staffButton);
         buttonPanel.add(gameButton);
-       // buttonPanel.add(salesButton);
 
 
 
@@ -173,10 +140,7 @@ public class GameStore extends JFrame implements ActionListener {
         item.addActionListener(this);
         staffMenu.add(item);
 
-       /* item = new JMenuItem("Update staff");
-        item.addActionListener(this);
-        staffMenu.add(item);
-*/
+
         item = new JMenuItem("Delete staff");
         item.addActionListener(this);
         staffMenu.add(item);
@@ -197,38 +161,14 @@ public class GameStore extends JFrame implements ActionListener {
         item.addActionListener(this);
         gameMenu.add(item);
 
-     /*   item = new JMenuItem("Update game");
-        item.addActionListener(this);
-        gameMenu.add(item);
-*/
         item = new JMenuItem("Delete game");
         item.addActionListener(this);
         gameMenu.add(item);
 
     }
 
-    private void createSalesMenu() {
-        JMenuItem item;
 
-        salesMenu = new JMenu("Sales");
 
-    /*    item = new JMenuItem("Add sales");
-        item.addActionListener(this);
-        salesMenu.add(item);
-
-        item = new JMenuItem("View sales");
-        item.addActionListener(this);
-        salesMenu.add(item);
-
-        item = new JMenuItem("Update sales");
-        item.addActionListener(this);
-        salesMenu.add(item);
-
-        item = new JMenuItem("Delete sales");
-        item.addActionListener(this);
-        salesMenu.add(item);
-*/
-    }
 
     public void createFileMenu() {
 
@@ -278,6 +218,7 @@ public class GameStore extends JFrame implements ActionListener {
 
                 ObjectInputStream game = new ObjectInputStream(new FileInputStream(file));
                 games = (ArrayList<Game>) game.readObject();
+                System.out.println(games.size());
                 game.close();
 
 
@@ -314,28 +255,26 @@ public class GameStore extends JFrame implements ActionListener {
         String address;
         long PhoneNo;
         String DOB;
-        //ID=Integer.parseInt(JOptionPane.showInputDialog("Enter staffs ID"));
 
+        ID=Integer.parseInt(JOptionPane.showInputDialog("Enter staffs ID"));
         forename = (JOptionPane.showInputDialog("Enter staffs forename"));
-        surname = JOptionPane.showInputDialog("Enter staffs name");
+        surname = JOptionPane.showInputDialog("Enter staffs surname");
         gender = (String) JOptionPane.showInputDialog(null, "Gender", "Gender", JOptionPane.QUESTION_MESSAGE, null, genderList, genderList[0]);
         address = JOptionPane.showInputDialog("Enter staffs address");
         PhoneNo = Integer.parseInt(JOptionPane.showInputDialog("Enter staffs PhoneNo"));
         DOB =(JOptionPane.showInputDialog("Please enter your DOB in the format dd/mm/yyyy"));
         int count= DOB.length();
         if(count==10) {
-            if(DOB.charAt(0) <=3 || DOB.charAt(3) <=1 || DOB.charAt(4) <=2 || DOB.charAt(6) <=2) {
-                staff = new Staff(ID, forename, surname, gender, DOB, address, PhoneNo);
-                staffs.add(staff);
-             }else{
-                JOptionPane.showInputDialog(null, "Error! There are no more than 31 days, 12 months or 2021 years", "Incorrect date", JOptionPane.ERROR_MESSAGE);
-            }
+            staff = new Staff(ID,forename,surname,gender,address,PhoneNo,DOB);
+            staffs.add(staff);
+
         }else{
             JOptionPane.showInputDialog(null, "Error! There must be 10 characters in the DOB (dd/mm/yyyy)", "Incorrect date", JOptionPane.ERROR_MESSAGE);
 
         }
+
         JOptionPane.showMessageDialog(null, "Staff '" + forename + surname + "' added to the system");
-        ID++;
+
 
     }
 
@@ -402,9 +341,7 @@ public class GameStore extends JFrame implements ActionListener {
         title = JOptionPane.showInputDialog("Enter games name");
         price = Double.parseDouble(JOptionPane.showInputDialog("Enter games price"));
         yearReleased = Integer.parseInt(JOptionPane.showInputDialog("Enter games release year"));
-            //JOptionPane.showInputDialog(null,"Error! Please enter a valid year in which a video game was released(1962-2019)", "Incorrect year", JOptionPane.ERROR_MESSAGE);
         review = Integer.parseInt(JOptionPane.showInputDialog("Enter games review out of 10"));
-        //JOptionPane.showInputDialog(null,"Error! Please enter a rating less than or equal to 10", "Incorrect review", JOptionPane.ERROR_MESSAGE);
 
         game = new Game(genre,title, price,yearReleased,review);
         games.add(game);
@@ -422,10 +359,12 @@ public class GameStore extends JFrame implements ActionListener {
         if (games.size() < 1) {
             JOptionPane.showMessageDialog(null, "No games are added to the system yet. Feel free to 'Add' new games.", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
+            System.out.println(games.size());
             Iterator<Game> iterator = games.iterator();
 
             while (iterator.hasNext()) {
-                gameCombo.addItem(iterator.next().getTitle() + "\n");
+                System.out.println(iterator.next());
+                //gameCombo.addItem(iterator.next().getTitle() + "\n");
             }
 
             JOptionPane.showMessageDialog(null, gameCombo, "Select game to view details", JOptionPane.PLAIN_MESSAGE);
